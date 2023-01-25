@@ -1,0 +1,33 @@
+@mixin horizontalFlex {
+  display: flex;
+  align-items: center;
+}
+@mixin horizontalFlexBetween {
+  @include horizontalFlex;
+  justify-content: space-between;
+}
+
+@mixin listPadding {
+  padding: 0.5rem 1rem;
+}
+
+.list-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  @include listPadding;
+  @include horizontalFlexBetween;
+  .user-image {
+
+  }
+  .header-options {
+    @include horizontalFlex;
+  }
+  .user-info {
+    .last-seen {
+      font-size: 12px;
+    }
+  }
+}

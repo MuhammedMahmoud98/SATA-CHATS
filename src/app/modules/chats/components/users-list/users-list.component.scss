@@ -1,0 +1,62 @@
+@import "../../../../../assets/scss/variables";
+@mixin horizontalFlex {
+  display: flex;
+  align-items: center;
+}
+@mixin horizontalFlexBetween {
+  @include horizontalFlex;
+  justify-content: space-between;
+}
+
+@mixin listPadding {
+  padding: 0.5rem 1rem;
+}
+.users-list-wrapper {
+  border-right: 1px solid $border-color;
+  .list-header {
+    @include listPadding;
+    @include horizontalFlexBetween;
+    .user-image {
+
+    }
+    .header-options {
+      @include horizontalFlex;
+    }
+  }
+  .users-chats-wrapper {
+    height: calc(100vh - 61px);
+    overflow-y: scroll;
+    @include listPadding;
+    .users {
+      .user-section {
+        cursor: pointer;
+        display: flex;
+        //padding: 0.5rem 0;
+        margin-bottom: 0.5rem;
+        .user-image-part {
+          padding: 0.5rem 0;
+          flex-grow: 0.5;
+        }
+        .user-info {
+          flex-grow: 10;
+          padding-bottom: 0.5rem;
+          @include horizontalFlexBetween;
+          border-bottom: 1px solid $border-color;
+          align-items: flex-start;
+          .left-part {
+
+          }
+          .right-part {
+            .chat-time {
+              font-size: 12px;
+            }
+          }
+        }
+        &:hover {
+          background-color: $hover-color;
+        }
+      }
+    }
+  }
+}
+

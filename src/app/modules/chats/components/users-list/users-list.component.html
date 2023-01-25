@@ -1,0 +1,35 @@
+<section class="users-list-wrapper" appWindowResize>
+  <!-- USERS LIST HEADER -->
+  <app-chat-header [hasUserInfo]="false" [headIcons]="headerIcons" [userInfo]="{image: 'assets/images/1.jpg'}"></app-chat-header>
+  <!-- USERS CHATS AND SEARCH -->
+  <div class="users-chats-wrapper">
+  <!-- USERS SEARCH FORM -->
+    <div class="users-search">
+      <form [formGroup]="searchForm">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Search or start new chat</mat-label>
+          <mat-icon matSuffix>search</mat-icon>
+          <input autocomplete="off" formControlName="search" matInput>
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="users">
+      <ng-container *ngIf="(users$ | async) as users">
+        <div matRipple class="user-section" *ngFor="let user of !getSearchValue ? users: users | filterUser: getSearchValue;trackBy:trackByFn;let i = index;" (click)="openFriendChat(user?.id)">
+          <div class="user-image-part">
+            <img [src]="user?.image" class="user-image-lg" alt="">
+          </div>
+          <div class="user-info">
+            <div class="left-part">
+              <div class="user-name mb-2">{{user?.name | titlecase}}</div>
+              <div class="user-chat text-muted">{{user?.outerMessage}}</div>
+            </div>
+            <div class="right-part text-muted">
+              <span class="chat-time">{{user?.lastSeen | date:'shortTime'}}</span>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</section>

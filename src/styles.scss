@@ -1,0 +1,76 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+@import "assets/scss/variables";
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$restaurant-management-primary: mat-palette($mat-indigo);
+$restaurant-management-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$restaurant-management-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$restaurant-management-theme: mat-dark-theme((
+  color: (
+    primary: $restaurant-management-primary,
+    accent: $restaurant-management-accent,
+    warn: $restaurant-management-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($restaurant-management-theme);
+
+
+@import "assets/bootstrap-grid/bootstrap.min.css";
+@import "assets/scss/global-classes";
+@import '~material-icons/iconfont/material-icons.css';
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: $primary-color;overflow-y: hidden; color: $text-light; }
+* {
+  outline: none !important;
+}
+
+.material-icons-outlined {
+  color: $icon-color;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: $nav-secondary-color;
+}
+
+//#00a884
+
+// SCROLL BAR
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $primary-color;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $nav-secondary-color;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

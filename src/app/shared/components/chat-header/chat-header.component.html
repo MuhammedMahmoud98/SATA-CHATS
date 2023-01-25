@@ -1,0 +1,20 @@
+<div class="nav-bg list-header">
+  <!-- USER IMAGE -->
+  <div class="left-part d-flex">
+    <div class="user-image mr-3">
+      <img [src]="userInfo?.image" class="user-image" alt="user-profile">
+    </div>
+    <div class="user-info" *ngIf="hasUserInfo">
+      <div class="user-name mb-1 semi-bold">{{userInfo?.name | titlecase}}</div>
+      <span class="last-seen text-muted">Last seen today at {{userInfo?.lastSeen | date:'shortTime'}}</span>
+    </div>
+  </div>
+  <!-- HEADER OPTIONS -->
+  <div class="header-options">
+    <button *ngFor="let icon of headIcons" mat-icon-button aria-label="Example mini fab with a heart icon">
+        <span class="material-icons-outlined">
+          {{icon}}
+        </span>
+    </button>
+  </div>
+</div>
