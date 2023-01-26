@@ -1,8 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
+import { InitialState } from '@ngrx/store/src/models';
 import { User } from '../../models/chats.model';
 import { LoadUsers, OpenFriendChat, RenderLastMessage } from '../actions/users.action';
 import { getBotMessageSuccess, sendMessage } from '../actions/chats.action';
-import {InitialState} from "@ngrx/store/src/models";
 
 export interface UsersState {
   users: User[];
@@ -28,12 +28,15 @@ export const usersReducer = createReducer(
     newUsers.find((user) => user.id === action.userId).messages.push(action.message);
     return { ...newState, users: newUsers };
   }),
-  on(getBotMessageSuccess, (state, action) => {
-    const newState = JSON.parse(JSON.stringify(state));
-    const newUsers = newState.users;
-    newUsers.find((user) => user.id === action.userId).messages.push(action.botMessage);
-    return { ...state, users: newUsers };
-  }),
+  on(getBotMessageSuccess, (state, action) => ({
+    ...state,
+    users: state.users.map((user) => {
+      if (user.id === action.userId) {
+        return { ...user, messages: [...user.messages, action.botMessage] };
+      }
+      return user;
+    }),
+  })),
   on(RenderLastMessage, (state, action) => {
     const newState = JSON.parse(JSON.stringify(state));
     const newUsers = newState.users;

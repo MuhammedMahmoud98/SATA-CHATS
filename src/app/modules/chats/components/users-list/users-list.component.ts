@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { User } from '../../../../models/chats.model';
 import { getUsers } from '../../../../store/selectors/users.selector';
 import { OpenFriendChat } from '../../../../store/actions/users.action';
+import {ChatsService} from "../../../../services/chats.service";
 
 @Component({
   selector: 'app-users-list',
@@ -23,7 +24,7 @@ export class UsersListComponent implements OnInit {
 
   searchForm: FormGroup;
 
-  constructor(private store: Store, private router: Router) { }
+  constructor(private store: Store, private router: Router, private readonly chatsService: ChatsService) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -53,6 +54,8 @@ export class UsersListComponent implements OnInit {
 
   openFriendChat(userId: number) {
     this.store.dispatch(OpenFriendChat({ userId }));
+    // FIRE GO DOWN FUNCTION
+    this.chatsService.isMessageSent.next(true);
     if (window.innerWidth < 992) {
       this.router.navigate(['mobile-chats/user-chat']);
     }
