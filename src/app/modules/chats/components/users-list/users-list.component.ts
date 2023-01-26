@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User } from '../../../../models/chats.model';
 import { getUsers } from '../../../../store/selectors/users.selector';
 import { OpenFriendChat } from '../../../../store/actions/users.action';
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-users-list',
@@ -32,6 +32,7 @@ export class UsersListComponent implements OnInit {
 
   selectUsersFromStore() {
     this.users$ = this.store.pipe(
+      // take(1),
       select(getUsers),
     );
   }
@@ -53,7 +54,7 @@ export class UsersListComponent implements OnInit {
   openFriendChat(userId: number) {
     this.store.dispatch(OpenFriendChat({ userId }));
     if (window.innerWidth < 992) {
-      this.router.navigate(['mobile-chats/user-chat'])
+      this.router.navigate(['mobile-chats/user-chat']);
     }
   }
 }

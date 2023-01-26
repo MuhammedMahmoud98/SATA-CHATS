@@ -22,7 +22,7 @@
           <div class="user-info">
             <div class="left-part">
               <div class="user-name mb-2">{{user?.name | titlecase}}</div>
-              <div class="user-chat text-muted">{{user?.outerMessage}}</div>
+              <div class="user-chat text-muted">{{user?.outerMessage | truncateChatText:55}}</div>
             </div>
             <div class="right-part text-muted">
               <span class="chat-time">{{user?.lastSeen | date:'shortTime'}}</span>

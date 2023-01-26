@@ -1,12 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import { BotResponse } from '../models/bot.model';
+import { UserChatComponent } from '../modules/chats/components/user-chat/user-chat.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatsService {
+  isMessageSent: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   constructor(private http: HttpClient) { }
 
   getChatBotMessage(): Observable<BotResponse[]> {
@@ -15,5 +18,9 @@ export class ChatsService {
 
   getRandomMessage() {
     return Math.ceil(Math.random() * 500);
+  }
+
+  logUserChat() {
+    // console.log(this.userChatComponent, 'CHAT COMP');
   }
 }

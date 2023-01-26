@@ -13,7 +13,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 import { globalReducers } from './store/reducers';
-import { MaterialApisModule } from './modules/material-apis/material-apis.module';
+import { MaterialApisModule } from './shared/material-apis/material-apis.module';
 import { SharedModule } from './shared/shared.module';
 import { ChatsEffect } from './store/effects/chats.effect';
 import { ChatsService } from './services/chats.service';

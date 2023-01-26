@@ -10,3 +10,8 @@ export const OpenFriendChat = createAction(
   '[USERS] Open Friend Chat',
   props<{userId: number}>(),
 );
+
+export const RenderLastMessage = createAction(
+  '[USERS] Render Last Message',
+  props<{userId: number}>(),
+);

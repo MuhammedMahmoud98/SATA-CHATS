@@ -7,8 +7,7 @@ export class AutoScrollDownDirective {
   constructor(private el: ElementRef<HTMLElement>) { }
 
   @HostListener('scroll', ['$event'])
-  autoScrollDown(event) {
-    console.log(event.target.scrollHeight, 'SCROLL DOWN');
-    this.el.nativeElement.scrollTo({ left: 0, top: event.target.scrollHeight });
+  autoScrollDown() {
+    this.el.nativeElement.scrollTop = this.el.nativeElement.scrollHeight;
   }
 }

@@ -34,6 +34,7 @@
         //padding: 0.5rem 0;
         margin-bottom: 0.5rem;
         .user-image-part {
+          margin-right: 0.3rem;
           padding: 0.5rem 0;
           flex-grow: 0.5;
         }
@@ -44,7 +45,9 @@
           border-bottom: 1px solid $border-color;
           align-items: flex-start;
           .left-part {
-
+            .user-chat {
+              white-space: pre-line;
+            }
           }
           .right-part {
             .chat-time {
