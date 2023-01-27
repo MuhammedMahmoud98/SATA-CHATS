@@ -1,17 +1,20 @@
 <section class="user-chat-section" *ngIf="(user$ | async) as user; else emptyChat">
   <app-chat-header [headIcons]="headIcons" [hasUserInfo]="true" [userInfo]="user"></app-chat-header>
-  <div class="chat-container">
-    <div #chatLayer class="chat-layer">
-      <div  *ngFor="let message of user?.messages;trackBy:trackByFn;let i =index;" @translateUpWithOpacity>
-        <div  class="chat-block personal-message mb-2" [ngClass]="message?.personal ? 'personal-message' : 'others-message'">
-          <div  class="message" >
-            <span class="message-body">{{message?.body}}</span>
-            <div class="text-right"><small class="message-time">{{message?.time | date:'shortTime'}}</small></div>
+    <div class="chat-container">
+      <div #chatLayer class="chat-layer">
+        <ng-container *ngIf="(networkStatus$ | async) as networkStatus">
+          <app-network-error @showWithOpacity *ngIf="networkStatus.hasError" [errorMessage]="networkStatus?.errorMessage"></app-network-error>
+        </ng-container>
+        <div *ngFor="let message of user?.messages;trackBy:trackByFn;let i =index;" @translateUpWithOpacity>
+          <div  class="chat-block personal-message mb-2" [ngClass]="message?.personal ? 'personal-message' : 'others-message'">
+            <div  class="message" >
+              <span class="message-body">{{message?.body}}</span>
+              <div class="text-right"><small class="message-time">{{message?.time | date:'shortTime'}}</small></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   <div class="chat-typing-form">
     <div class="emoticons-icons">
       <button mat-icon-button aria-label="Example mini fab with a heart icon">

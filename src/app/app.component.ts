@@ -1,14 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import {
+  fromEvent, merge, Observable, of, Subject, Subscription,
+} from 'rxjs';
+import { map, takeUntil, tap } from 'rxjs/operators';
 import { User } from './models/chats.model';
 import { LoadUsers } from './store/actions/users.action';
+import { CheckNetworkStatus } from './store/actions/network-status.action';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   users: User[] = [
     {
       id: 1,
@@ -99,6 +104,8 @@ export class AppComponent implements OnInit {
     },
   ];
 
+  destroyed$: Subject<boolean> = new Subject<boolean>();
+
   constructor(
     public store: Store,
   ) {
@@ -106,9 +113,27 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUsers();
+    this.checkNetworkStatus();
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 
   loadUsers(): void {
     this.store.dispatch(LoadUsers({ users: this.users }));
+  }
+
+  checkNetworkStatus() {
+    merge(
+      of(null),
+      fromEvent(window, 'online'),
+      fromEvent(window, 'offline'),
+    ).pipe(
+      map(() => navigator.onLine),
+      tap((status) => this.store.dispatch(CheckNetworkStatus({ status: !status, statusMessage: 'Network error, You\'re Offline' }))),
+      takeUntil(this.destroyed$),
+    ).subscribe();
   }
 }

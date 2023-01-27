@@ -16,6 +16,7 @@
     background-size: contain;
     height: calc(100vh - 126px);
     .chat-layer {
+      position: relative;
       background-color: rgba(black, 0.8);
       height: 100%;
       overflow-y: scroll !important;

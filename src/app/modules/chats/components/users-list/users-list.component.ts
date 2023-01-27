@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { User } from '../../../../models/chats.model';
 import { getUsers } from '../../../../store/selectors/users.selector';
 import { OpenFriendChat } from '../../../../store/actions/users.action';
-import {ChatsService} from "../../../../services/chats.service";
+import { ChatsService } from '../../../../services/chats.service';
 
 @Component({
   selector: 'app-users-list',

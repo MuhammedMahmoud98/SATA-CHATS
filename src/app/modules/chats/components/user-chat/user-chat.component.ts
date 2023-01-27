@@ -5,14 +5,16 @@ import { Observable, Subject } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { FormControl, FormGroup } from '@angular/forms';
 import {
-  animate, style, transition, trigger,
+  animate, group, style, transition, trigger,
 } from '@angular/animations';
 import { take, takeUntil, tap } from 'rxjs/operators';
 import { DOCUMENT } from '@angular/common';
 import { Message, User } from '../../../../models/chats.model';
-import { getSelectedUser } from '../../../../store/selectors/users.selector';
+import { getNetworkStatus, getSelectedUser } from '../../../../store/selectors/users.selector';
 import { sendMessage } from '../../../../store/actions/chats.action';
 import { ChatsService } from '../../../../services/chats.service';
+import { UsersState } from '../../../../store/reducers/users.reducer';
+import { NetworkStatus } from '../../../../models/network-status.model';
 
 @Component({
   selector: 'app-user-chat',
@@ -23,6 +25,15 @@ import { ChatsService } from '../../../../services/chats.service';
       transition(':enter', [
         style({ opacity: 0, transform: 'translateY(20px)' }),
         animate('150ms', style({ opacity: 1, transform: 'translateY(0px)' })),
+      ]),
+    ]),
+    trigger('showWithOpacity', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('150ms', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        animate('150ms ease-in', style({ opacity: 0 })),
       ]),
     ]),
   ],
@@ -39,7 +50,11 @@ export class UserChatComponent implements OnInit, OnDestroy {
 
   typingForm: FormGroup;
 
+  networkStatus$: Observable<NetworkStatus>;
+
   readonly destroyed$: Subject<boolean> = new Subject<boolean>();
+
+  items = [];
 
   constructor(private readonly store: Store, private readonly chatsService: ChatsService) {
     this.createTypingForm();
@@ -48,11 +63,17 @@ export class UserChatComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.selectUserChat();
     this.goDownWhenMessageSent();
+    this.selectNetworkStatus();
+    this.items = Array.from({ length: 1000 }).map((_, i) => `Item ${i}`);
   }
 
   ngOnDestroy() {
     this.destroyed$.next();
     this.destroyed$.complete();
+  }
+
+  selectNetworkStatus(): void {
+    this.networkStatus$ = this.store.pipe(select(getNetworkStatus));
   }
 
   selectUserChat(): void {

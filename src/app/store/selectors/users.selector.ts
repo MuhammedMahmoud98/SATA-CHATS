@@ -12,3 +12,8 @@ export const getSelectedUser = createSelector(
   getSelectedUserId,
   (users: User[], userId: number) => users.filter((user) => user.id === userId)[0],
 );
+
+export const getNetworkStatus = createSelector(
+  getUsersState,
+  (state) => ({ errorMessage: state.errorMessage, hasError: state.hasError }),
+);

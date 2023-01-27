@@ -7,6 +7,7 @@ import { ChatHeaderComponent } from './components/chat-header/chat-header.compon
 import { AutoScrollDownDirective } from './directives/auto-scroll-down.directive';
 import { WindowResizeDirective } from './directives/window-resize.directive';
 import { TruncateChatTextPipe } from './pipes/truncate-chat-text.pipe';
+import { NetworkErrorComponent } from './components/network-error/network-error.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { TruncateChatTextPipe } from './pipes/truncate-chat-text.pipe';
     AutoScrollDownDirective,
     WindowResizeDirective,
     TruncateChatTextPipe,
+    NetworkErrorComponent,
   ],
   imports: [
     CommonModule,
@@ -31,6 +33,7 @@ import { TruncateChatTextPipe } from './pipes/truncate-chat-text.pipe';
         WindowResizeDirective,
         MatRippleModule,
         TruncateChatTextPipe,
+        NetworkErrorComponent,
     ],
 })
 export class SharedModule { }

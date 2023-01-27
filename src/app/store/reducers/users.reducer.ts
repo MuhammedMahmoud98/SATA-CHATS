@@ -2,7 +2,8 @@ import { createReducer, on } from '@ngrx/store';
 import { InitialState } from '@ngrx/store/src/models';
 import { User } from '../../models/chats.model';
 import { LoadUsers, OpenFriendChat, RenderLastMessage } from '../actions/users.action';
-import { getBotMessageSuccess, sendMessage } from '../actions/chats.action';
+import { getBotMessageFailed, getBotMessageSuccess, sendMessage } from '../actions/chats.action';
+import { CheckNetworkStatus } from '../actions/network-status.action';
 
 export interface UsersState {
   users: User[];
@@ -36,7 +37,9 @@ export const usersReducer = createReducer(
       }
       return user;
     }),
+    hasError: false,
   })),
+  on(getBotMessageFailed, (state, action) => ({ ...state, hasError: true, errorMessage: action.errorMessage })),
   on(RenderLastMessage, (state, action) => {
     const newState = JSON.parse(JSON.stringify(state));
     const newUsers = newState.users;
@@ -44,4 +47,5 @@ export const usersReducer = createReducer(
     currentUser.outerMessage = currentUser.messages[currentUser.messages.length - 1].body;
     return { ...newState, users: newUsers };
   }),
+  on(CheckNetworkStatus, (state, action) => ({ ...state, hasError: action.status, errorMessage: action.statusMessage })),
 );

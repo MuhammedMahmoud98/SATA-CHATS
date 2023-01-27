@@ -8,7 +8,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import {MatIconModule} from '@angular/material/icon';
     MatProgressBarModule,
     MatSidenavModule,
     MatIconModule,
+    ScrollingModule,
   ],
   exports: [
     MatButtonModule,
@@ -35,6 +37,7 @@ import {MatIconModule} from '@angular/material/icon';
     MatProgressBarModule,
     MatSidenavModule,
     MatIconModule,
+    ScrollingModule,
   ],
   providers: [],
 })

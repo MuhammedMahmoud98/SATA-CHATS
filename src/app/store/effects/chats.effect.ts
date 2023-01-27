@@ -26,7 +26,7 @@ export class ChatsEffect {
         userId: action.userId,
       }), RenderLastMessage({userId: action.userId})]),
       finalize(() => this.chatsService.isMessageSent.next(true)),
-      catchError(() => of(getBotMessageFailed({ errorMessage: 'The message didn\'t send successfully' }))),
+      catchError(() => of(getBotMessageFailed({ errorMessage: 'Bot server error' }))),
     )),
   ));
 }
