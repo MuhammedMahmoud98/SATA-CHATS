@@ -45,6 +45,7 @@ export const usersReducer = createReducer(
     const newUsers = newState.users;
     const currentUser = newUsers.find((user) => user.id === action.userId);
     currentUser.outerMessage = currentUser.messages[currentUser.messages.length - 1].body;
+    currentUser.lastSeen = new Date();
     return { ...newState, users: newUsers };
   }),
   on(CheckNetworkStatus, (state, action) => ({ ...state, hasError: action.status, errorMessage: action.statusMessage })),
