@@ -1,7 +1,7 @@
 <section class="user-chat-section" *ngIf="(user$ | async) as user; else emptyChat">
   <app-chat-header [headIcons]="headIcons" [hasUserInfo]="true" [userInfo]="user"></app-chat-header>
-    <div class="chat-container">
-      <div #chatLayer class="chat-layer">
+    <div class="chat-container" >
+      <div #chatLayer class="chat-layer" appShowScrollDown>
         <ng-container *ngIf="(networkStatus$ | async) as networkStatus">
           <app-network-error @showWithOpacity *ngIf="networkStatus.hasError" [errorMessage]="networkStatus?.errorMessage"></app-network-error>
         </ng-container>
@@ -13,6 +13,12 @@
             </div>
           </div>
         </div>
+        <!-- SCROLL DOWN BUTTON -->
+        <button *ngIf="userScrolledUp$ | async" (click)="scrollDown()" mat-mini-fab color="primary" class="scroll-down shadow" aria-label="Example mini fab with a heart icon">
+          <span class="material-icons-outlined">
+            keyboard_double_arrow_down
+          </span>
+        </button>
       </div>
     </div>
   <div class="chat-typing-form">

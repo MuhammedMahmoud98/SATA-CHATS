@@ -10,6 +10,8 @@ import { UserChatComponent } from '../modules/chats/components/user-chat/user-ch
 export class ChatsService {
   isMessageSent: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+  showScrollDownBtn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   constructor(private http: HttpClient) { }
 
   getChatBotMessage(): Observable<BotResponse[]> {

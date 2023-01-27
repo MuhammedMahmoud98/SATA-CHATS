@@ -1,13 +1,17 @@
 import {
   Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild,
 } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { FormControl, FormGroup } from '@angular/forms';
 import {
   animate, group, style, transition, trigger,
 } from '@angular/animations';
-import { take, takeUntil, tap } from 'rxjs/operators';
+import {
+  debounceTime,
+  delay,
+  switchMap, take, takeUntil, tap,
+} from 'rxjs/operators';
 import { DOCUMENT } from '@angular/common';
 import { Message, User } from '../../../../models/chats.model';
 import { getNetworkStatus, getSelectedUser } from '../../../../store/selectors/users.selector';
@@ -54,7 +58,7 @@ export class UserChatComponent implements OnInit, OnDestroy {
 
   readonly destroyed$: Subject<boolean> = new Subject<boolean>();
 
-  items = [];
+  userScrolledUp$: Observable<boolean>;
 
   constructor(private readonly store: Store, private readonly chatsService: ChatsService) {
     this.createTypingForm();
@@ -64,7 +68,7 @@ export class UserChatComponent implements OnInit, OnDestroy {
     this.selectUserChat();
     this.goDownWhenMessageSent();
     this.selectNetworkStatus();
-    this.items = Array.from({ length: 1000 }).map((_, i) => `Item ${i}`);
+    this.checkIfUserScrolledUp();
   }
 
   ngOnDestroy() {
@@ -112,6 +116,12 @@ export class UserChatComponent implements OnInit, OnDestroy {
     if (this.myScrollContainer && this.myScrollContainer.nativeElement) {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer?.nativeElement?.scrollHeight;
     }
+  }
+
+  checkIfUserScrolledUp() {
+    this.userScrolledUp$ = this.chatsService.showScrollDownBtn.pipe(
+      takeUntil(this.destroyed$),
+    );
   }
 
   goDownWhenMessageSent() {

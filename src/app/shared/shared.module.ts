@@ -8,6 +8,7 @@ import { AutoScrollDownDirective } from './directives/auto-scroll-down.directive
 import { WindowResizeDirective } from './directives/window-resize.directive';
 import { TruncateChatTextPipe } from './pipes/truncate-chat-text.pipe';
 import { NetworkErrorComponent } from './components/network-error/network-error.component';
+import { ShowScrollDownDirective } from './directives/show-scroll-down.directive';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { NetworkErrorComponent } from './components/network-error/network-error.
     WindowResizeDirective,
     TruncateChatTextPipe,
     NetworkErrorComponent,
+    ShowScrollDownDirective,
   ],
   imports: [
     CommonModule,
@@ -24,16 +26,17 @@ import { NetworkErrorComponent } from './components/network-error/network-error.
     MaterialApisModule,
     MatRippleModule,
   ],
-    exports: [
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialApisModule,
-        ChatHeaderComponent,
-        AutoScrollDownDirective,
-        WindowResizeDirective,
-        MatRippleModule,
-        TruncateChatTextPipe,
-        NetworkErrorComponent,
-    ],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialApisModule,
+    ChatHeaderComponent,
+    AutoScrollDownDirective,
+    WindowResizeDirective,
+    MatRippleModule,
+    TruncateChatTextPipe,
+    NetworkErrorComponent,
+    ShowScrollDownDirective,
+  ],
 })
 export class SharedModule { }
